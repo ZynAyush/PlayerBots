@@ -1,0 +1,40 @@
+name: PlayerBots
+version: '${version}'
+main: com.example.bot.BotPlugin
+api-version: '26.2'
+description: Server-side fake-player bots for Paper/Purpur 26.2.
+softdepend: [LuckPerms, AuthMe]
+
+commands:
+  bot:
+    description: Manage fake-player bots.
+    usage: /bot <subcommand> [args...]
+
+permissions:
+  bot.admin:
+    description: Allows use of all /bot subcommands.
+    default: op
+
+  bot.kill-other:
+    description: Allows use of /bot kill_other to remove another player's bot.
+    default: op
+  bot.original:
+    description: Allows operators to create protected original bots.
+    default: op
+
+
+  bot.original.grant:
+    description: Allows operators to grant/revoke bot.original in LuckPerms; original-bot owners may also use it for their original bot.
+    default: op
+
+  bot.reload:
+    description: Allows use of /bot reload.
+    default: op
+
+  bot.rejoin:
+    description: Allows a player to rejoin their own saved bot; operators can rejoin any saved bot.
+    default: true
+
+  bot.use:
+    description: Allows normal PlayerBots commands for a player's own bots and shared bot controls.
+    default: true
