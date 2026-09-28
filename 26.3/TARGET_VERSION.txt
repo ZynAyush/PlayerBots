@@ -1,3 +1,0 @@
-Minecraft target: 26.3
-Paper dev bundle: 26.3.build.+
-Java: 25
