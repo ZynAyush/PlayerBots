@@ -1,0 +1,218 @@
+# Bot plugin configuration.
+# Most settings are applied after a restart. Values are clamped to safe ranges.
+
+# Master switch.
+enabled: true
+
+debug: false
+
+# Console logging controls.
+logging:
+  spawns: true
+  kills: true
+  pickups: false
+
+limits:
+  # Total live bots on the server.
+  max-bots: 50
+  # Maximum live bots owned by one player. Allowed range: 1-5.
+  max-bots-per-player: 3
+
+spawn:
+  # /bot spawn with no name becomes <prefix><player-name>.
+  default-name-prefix: "BOT_"
+  persistent-by-default: false
+
+  # Defaults that every newly spawned bot receives.
+  game-mode: SURVIVAL
+  invulnerable: false
+  collidable: true
+  glowing: false
+  gravity: true
+  can-pickup-items: true
+  # Initial selected hotbar slot for newly spawned bots. 0-8.
+  starting-hotbar-slot: 0
+
+physics:
+  # Runs the real ServerPlayer/Entity tick for gravity, collision, velocity,
+  # fall damage, knockback and normal server-side player physics. Keep true
+  # unless you intentionally want a non-physical bot.
+  enabled: true
+
+attributes:
+  # Vanilla player defaults are approximately 20 health, 0.1 movement speed,
+  # 4 attack speed, and 0 knockback resistance.
+  max-health: 20.0
+  movement-speed: 0.1
+  attack-speed: 4.0
+  knockback-resistance: 0.0
+
+hunger:
+  # Whether bot attacks are allowed to add normal player food exhaustion.
+  # false keeps hunger/saturation from decreasing because of attacks.
+  attack: true
+  # Whether bot item use is allowed to add normal player food exhaustion.
+  # Food items can still apply their normal eating effects when this is false.
+  use: true
+
+pickup:
+  enabled: true
+  # true = let the vanilla ServerPlayer physics tick handle item pickup.
+  # false = use the plugin fallback bridge below.
+  use-vanilla-physics: true
+  # Keep close to normal player pickup reach when fallback mode is used.
+  radius: 1.5
+  # How often the pickup bridge runs.
+  check-interval-ticks: 10
+  # Maximum item entities processed per check.
+  max-items-per-check: 1
+  # Respect the item's normal pickup delay.
+  respect-pickup-delay: true
+  # Respect item ownership restrictions.
+  respect-item-owner: true
+  # Prefer putting a new stack into the hotbar.
+  prefer-hotbar: true
+  # -1 = first available hotbar slot; 0-8 = try this slot first.
+  preferred-hotbar-slot: -1
+
+hand-sync:
+  # Keep the bot's visible hand/equipment synchronized for real viewers.
+  enabled: true
+  on-pickup: true
+  on-hotbar: true
+  on-give: true
+
+drop:
+  # Multiplies the normal thrown-item velocity. 1.0 = normal.
+  throw-velocity-multiplier: 1.0
+  # Normal item pickup delay for items thrown by the bot.
+  pickup-delay-ticks: 10
+
+sneak:
+  # Force the actual player sneaking pose for viewers.
+  force-pose: true
+  # Keep the pose locked until /bot sneak <name> off.
+  fixed-pose: true
+
+
+death:
+  # true = bot keeps its inventory when it dies; false = normal drops.
+  keep-inventory: true
+  # true = bot keeps its XP level on death.
+  keep-level: true
+  # true = drop XP orbs on death; false = no XP drops.
+  drop-experience: false
+
+kill:
+  # true = /bot kill, /bot kill_other, and damage-based bot deaths save the
+  # bot inventory for its next /bot spawn with the same name.
+  keep-inventory: true
+
+mine:
+  # Enables the admin-only /bot mine action.
+  enabled: true
+  # Maximum block reach for server-side mining.
+  reach-blocks: 5.0
+
+attack:
+  # Maximum entity reach used by /bot attack.
+  reach-blocks: 4.0
+
+knockback:
+  # Vanilla Paper knockback is left untouched when enabled.
+  # When false, bots receive full knockback resistance instead.
+  enabled: true
+
+use:
+  enabled: true
+  # When true, /bot use falls back to server-side mining if right-click did not consume the target.
+  mine-fallback: true
+  # Maximum block/entity reach used by /bot use.
+  reach-blocks: 5.0
+  # Swing the bot's hand after a successful use.
+  swing-hand: true
+  # Allow held blocks to be used normally.
+  allow-block-items: true
+  # Allow non-block items to be used normally.
+  allow-non-block-items: true
+
+autosave:
+  # Periodically save persistent bots.
+  enabled: true
+  # 6000 ticks = 5 minutes.
+  interval-ticks: 6000
+
+join-message:
+  # Message shown to all online players when a Bot plugin fake player joins.
+  enabled: true
+  prefix: "&7[&6BOT&7] "
+  format: "{prefix}&e{name} &7joined the game."
+
+leave-message:
+  # Message shown to all online players when a Bot plugin fake player leaves.
+  enabled: true
+  prefix: "&7[&6BOT&7] "
+  format: "{prefix}&e{name} &7left the game."
+
+advancement-message:
+  # Custom advancement announcement for Bot plugin fake players.
+  enabled: true
+  prefix: "&7[&6BOT&7] "
+  format: "{prefix}&e{name} &7has made the advancement &r{advancement}&7."
+  # If true, only override advancements that vanilla would announce to chat.
+  only-if-vanilla-announces: true
+  # Placeholders: {prefix}, {name}, {advancement}, {key}
+
+owner-offline-timeout:
+  # Automatically removes regular bots after their owning player has
+  # been offline for the configured time.
+  enabled: true
+  minutes: 15
+  # Original bots created with /bot original spawn are exempt by default.
+  exempt-original-bots: true
+
+owner-offline-warning:
+  # Broadcast when a real player leaves while owning timeout-eligible bots.
+  enabled: true
+  # Placeholders: {owner}, {time}, {minutes}, {seconds}, {count}
+  format: "&e{owner} &7left the server. Their bot(s) will be kicked in &c{time}&7."
+
+authme:
+  # Enables the fake-player AuthMe bridge. PlayerBots uses NPC metadata, a
+  # loopback remote address and AuthMe's public forceLogin API.
+  bypass: true
+
+luckperms:
+  # Give bots a higher-priority LuckPerms prefix so inherited group prefixes do not win.
+  # PlayerBots also applies the same prefix directly to the bot display/list name.
+  hide-prefix: true
+  prefix: "&7[&6BOT&7] "
+
+rejoin:
+  # Keep a snapshot of a bot after it leaves, is kicked, or dies so the owner
+  # or an operator can restore it later with /bot rejoin [name].
+  enabled: true
+  # Keep rejoin snapshots after a server restart.
+  persist-after-restart: true
+  save-on-quit: true
+  save-on-kick: true
+  save-on-death: true
+  # Original bots may also be rejoined if they were removed unexpectedly.
+  allow-original-bots: true
+
+collision:
+  # Enables normal player-style entity collision for bots.
+  enabled: true
+  # Dedicated scoreboard team used to control player-vs-player collision.
+  team-name: "playerbots"
+  # Paper 26.3 Team.OptionStatus value. ALWAYS is normal collision.
+  rule: "ALWAYS"
+
+messages:
+  # Supports Minecraft legacy & colour codes.
+  prefix: "&6[Bot] &r"
+  info-color: "&7"
+  success-color: "&a"
+  error-color: "&c"
+  warn-color: "&e"
+
