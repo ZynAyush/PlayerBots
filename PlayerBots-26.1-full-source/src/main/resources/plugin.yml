@@ -1,0 +1,80 @@
+name: PlayerBots
+version: '${version}'
+main: com.example.bot.BotPlugin
+api-version: '26.1'
+description: Server-side fake-player bots for Paper/Purpur 26.1.
+softdepend: [LuckPerms, AuthMe]
+
+commands:
+  bot:
+    description: Manage fake-player bots.
+    usage: /bot <subcommand> [args...]
+
+permissions:
+  bot.*:
+    description: Grants every PlayerBots permission.
+    default: false
+    children:
+      bot.admin: true
+      bot.player: true
+      bot.action: true
+      bot.kill-other: true
+      bot.original: true
+      bot.original.grant: true
+      bot.reload: true
+      bot.rejoin: true
+      bot.use: true
+      bot.mine: true
+
+  bot.admin:
+    description: Grants all PlayerBots controls and administrative commands.
+    default: op
+    children:
+      bot.player: true
+      bot.action: true
+      bot.kill-other: true
+      bot.original: true
+      bot.original.grant: true
+      bot.reload: true
+      bot.mine: true
+
+  bot.player:
+    description: Grants normal PlayerBots controls for owned bots.
+    default: false
+    children:
+      bot.use: true
+      bot.rejoin: true
+
+  bot.action:
+    description: Grants PlayerBots attack and use controls for owned bots.
+    default: false
+    children:
+      bot.use: true
+
+  bot.mine:
+    description: Allows the admin-only /bot mine action.
+    default: op
+
+  bot.kill-other:
+    description: Allows use of /bot kill_other to remove another player's bot.
+    default: op
+
+  bot.original:
+    description: Allows operators to create protected original bots.
+    default: op
+
+  bot.original.grant:
+    description: Allows operators to grant/revoke bot.original in LuckPerms.
+    default: op
+
+  bot.reload:
+    description: Allows use of /bot reload.
+    default: op
+
+  bot.rejoin:
+    description: Allows a player to rejoin their own saved bot.
+    default: false
+
+  bot.use:
+    description: Allows normal PlayerBots commands for owned bots.
+    default: false
